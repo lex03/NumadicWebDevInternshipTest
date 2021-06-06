@@ -72,11 +72,14 @@ function App() {
       onKeyDown={toggleDrawer(false, {})}
     >
       <List>
+        <ListItem>
+          <h2>Details</h2>
+        </ListItem>
         <ListItem button>Country : {names.name}</ListItem>
         <ListItem button>Capital : {names.capital}</ListItem>
         <ListItem button>Region : {names.region}</ListItem>
         <ListItem button>Subregion : {names.subregion}</ListItem>
-        <ListItem button>Area : {names.area}</ListItem>
+        <ListItem button>Area : {names.area} Sq kms</ListItem>
         <ListItem button>Timezones : {names.timezones + " "}</ListItem>
         <ListItem button>
           <ListItemText primary="Borders" />
@@ -104,9 +107,10 @@ function App() {
         <Grid item xs={12}>
           <TableContainer component={Paper}>
             <Table
+              stickyHeader
               className={classes.table}
               size="small"
-              aria-label="simple table"
+              aria-label="sticky table"
             >
               <TableHead>
                 <TableRow>
