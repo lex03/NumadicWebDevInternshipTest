@@ -22,7 +22,7 @@ import { Link } from "@material-ui/core";
 
 const countriesURL = "https://restcountries.eu/rest/v2/all";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   table: {
     minWidth: 650,
   },
@@ -32,7 +32,10 @@ const useStyles = makeStyles({
   fullList: {
     width: "auto",
   },
-});
+  nested: {
+    paddingLeft: theme.spacing(4),
+  },
+}));
 
 function App() {
   const [countriesData, setCountriesData] = useState([]);
@@ -48,43 +51,48 @@ function App() {
     getCountriesWithAxios();
   }, []);
 
-  const [state, setState] = React.useState({
-    right: false,
-  });
-  const toggleDrawer = (anchor, open) => (event) => {
-    if (
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
+  const [state, setState] = React.useState();
+  const [con, setCon] = React.useState({});
 
-    setState({ ...state, [anchor]: open });
+  const toggleDrawer = (open, cont) => (event) => {
+    setState(open);
+    setCon(cont);
   };
 
-  const list = (anchor) => (
+  const list = (names) => (
     <div
-      className={clsx(classes.list, {
-        [classes.fullList]: anchor === "top" || anchor === "bottom",
-      })}
       role="presentation"
-      onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}
+      onClick={toggleDrawer(false, {})}
+      onKeyDown={toggleDrawer(false, {})}
     >
       <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem button key={text}>
+        <ListItem button>Country : {names.name}</ListItem>
+        <ListItem button>Capital : {names.capital}</ListItem>
+        <ListItem button>Region : {names.region}</ListItem>
+        <ListItem button>Subregion : {names.subregion}</ListItem>
+        <ListItem button>Area : {names.area}</ListItem>
+        {/* <ListItem button>
+          Timezone :
+          {names.timezones.map((text, index) => (
             <ListItemText primary={text} />
+          ))}
+        </ListItem>
+        <ListItem button>
+          <ListItemText primary="Borders" />
+        </ListItem>
+        {names.borders.map((text, index) => (
+          <ListItem button className={classes.nested}>
+            <ListItemText secondary={text} />
           </ListItem>
         ))}
-      </List>
-      <Divider />
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemText primary={text} />
+        <ListItem button>
+          <ListItemText primary="Languages" />
+        </ListItem>
+        {names.languages.map((text, index) => (
+          <ListItem button className={classes.nested}>
+            <ListItemText secondary={text.name} />
           </ListItem>
-        ))}
+        ))}*/}
       </List>
     </div>
   );
@@ -122,17 +130,10 @@ function App() {
                 {countriesData.map((country) => (
                   <TableRow>
                     <TableCell align="left">
-                      <div key="right">
-                        <Link onClick={toggleDrawer("right", true)}>
+                      <div>
+                        <Link onClick={toggleDrawer(true, country)}>
                           {country.name}
                         </Link>
-                        <Drawer
-                          anchor={"right"}
-                          open={state["right"]}
-                          onClose={toggleDrawer("right", false)}
-                        >
-                          {list("right")}
-                        </Drawer>
                       </div>
                     </TableCell>
                     <TableCell align="left">
@@ -146,6 +147,13 @@ function App() {
                     <TableCell align="left">{country.region}</TableCell>
                   </TableRow>
                 ))}
+                <Drawer
+                  anchor={"right"}
+                  open={state}
+                  onClose={toggleDrawer(false, {})}
+                >
+                  {list(con)}
+                </Drawer>
               </TableBody>
             </Table>
           </TableContainer>
