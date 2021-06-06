@@ -65,7 +65,7 @@ function App() {
     }
   };
 
-  const list = (names) => (
+  const list = (data) => (
     <div
       role="presentation"
       onClick={toggleDrawer(false, {})}
@@ -75,12 +75,12 @@ function App() {
         <ListItem>
           <h2>Details</h2>
         </ListItem>
-        <ListItem button>Country : {names.name}</ListItem>
-        <ListItem button>Capital : {names.capital}</ListItem>
-        <ListItem button>Region : {names.region}</ListItem>
-        <ListItem button>Subregion : {names.subregion}</ListItem>
-        <ListItem button>Area : {names.area} Sq kms</ListItem>
-        <ListItem button>Timezones : {names.timezones + " "}</ListItem>
+        <ListItem button>Country : {data.name}</ListItem>
+        <ListItem button>Capital : {data.capital}</ListItem>
+        <ListItem button>Region : {data.region}</ListItem>
+        <ListItem button>Subregion : {data.subregion}</ListItem>
+        <ListItem button>Area : {data.area} Sq kms</ListItem>
+        <ListItem button>Timezones : {data.timezones + " "}</ListItem>
         <ListItem button>
           <ListItemText primary="Borders" />
         </ListItem>
