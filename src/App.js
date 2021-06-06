@@ -13,7 +13,6 @@ import clsx from "clsx";
 import Drawer from "@material-ui/core/Drawer";
 import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 
@@ -53,10 +52,17 @@ function App() {
 
   const [state, setState] = React.useState();
   const [con, setCon] = React.useState({});
+  const [border, setBorder] = React.useState([]);
+  const [lang, setLang] = React.useState([]);
 
   const toggleDrawer = (open, cont) => (event) => {
     setState(open);
     setCon(cont);
+    console.log(cont);
+    if (open === true) {
+      setBorder(cont.borders);
+      setLang(cont.languages);
+    }
   };
 
   const list = (names) => (
@@ -71,28 +77,23 @@ function App() {
         <ListItem button>Region : {names.region}</ListItem>
         <ListItem button>Subregion : {names.subregion}</ListItem>
         <ListItem button>Area : {names.area}</ListItem>
-        {/* <ListItem button>
-          Timezone :
-          {names.timezones.map((text, index) => (
-            <ListItemText primary={text} />
-          ))}
-        </ListItem>
+        <ListItem button>Timezones : {names.timezones + " "}</ListItem>
         <ListItem button>
           <ListItemText primary="Borders" />
         </ListItem>
-        {names.borders.map((text, index) => (
-          <ListItem button className={classes.nested}>
+        {border.map((text, i) => (
+          <ListItem button className={classes.nested} key={"text-" + i}>
             <ListItemText secondary={text} />
           </ListItem>
         ))}
         <ListItem button>
           <ListItemText primary="Languages" />
         </ListItem>
-        {names.languages.map((text, index) => (
-          <ListItem button className={classes.nested}>
+        {lang.map((text, index) => (
+          <ListItem button className={classes.nested} key={index}>
             <ListItemText secondary={text.name} />
           </ListItem>
-        ))}*/}
+        ))}
       </List>
     </div>
   );
